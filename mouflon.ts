@@ -375,7 +375,7 @@ async function main() {
 
   if (fullResponse) {
     // Output the entire AccessTokenResponse
-    console.log(atResponse);
+    console.log(JSON.stringify(atResponse));
   } else {
     // Output only the access token
     console.log(atResponse.access_token);
