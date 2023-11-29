@@ -20,14 +20,41 @@ the OIDC authorization.
 - supports only keycloak, only a single realm and a single client
 - close to no error handling. So it will throw stack traces without any hints upon errors
 
-Of course all of these are possible future improvements :)  
-
 ## Installation
 
-Mouflon uses [*deno*](https://deno.land/), so make sure to have it [installed](https://deno.land/#installation).
+Before installing Mouflon, ensure that [*Deno*](https://deno.land/) is installed on your system. If it's not installed, you can find the installation instructions on the [Deno installation page](https://deno.land/#installation).
 
-Place file `mouflon.ts` into your `$PATH` (e.g. `~/bin`) and set the execution-bit (e.g. `chmod +x mouflon.ts`).
+### Setting Up Mouflon
 
+1. **Place `mouflon.ts` in a Suitable Directory**: Download or clone the `mouflon.ts` file into a directory of your choice. For example:
+   ```bash
+   git clone [repository-url] ~/path/to/mouflon-directory
+   ```
+   Make sure to replace `[repository-url]` with the actual URL of the repository and `~/path/to/mouflon-directory` with the path where you want to store the script.
+
+2. **Make `mouflon.ts` Executable**: Change the permissions of the file to make it executable.
+   ```bash
+   chmod +x ~/path/to/mouflon-directory/mouflon.ts
+   ```
+
+3. **Create a Symbolic Link in Your `$PATH`**:
+    - Decide on a directory within your `$PATH` where you want to place the symbolic link. Common choices include `~/bin` or `/usr/local/bin`.
+    - Create a symbolic link to `mouflon.ts`. This allows you to run `mouflon.ts` from any location without specifying the full path. Replace `~/bin` with your chosen directory if different:
+      ```bash
+      ln -s ~/path/to/mouflon-directory/mouflon.ts ~/bin/mouflon.ts
+      ```
+
+4. **Verify the Installation**:
+    - Ensure the symlink was created successfully by listing the contents of the directory:
+      ```bash
+      ls -l ~/bin
+      ```
+    - Test running the script to confirm everything is set up correctly:
+      ```bash
+      mouflon.ts --help
+      ```
+
+This guide provides a generic approach to installing Mouflon with a focus on creating a symbolic link within a directory that's part of the user's `$PATH`. It assumes the user has already downloaded `mouflon.ts` and has Deno installed on their system.
 ## Configuration 
 
 ### Keycloak
@@ -47,6 +74,8 @@ Currently, *mouflon* does **not** validate the JSON file.
 ## Usage
 
 Simply execute `mouflon.ts` or `./mouflon.ts`
+
+Get full AccessTokenResponse with `mouflon.ts --full-response`
 
 ## Examples
 
