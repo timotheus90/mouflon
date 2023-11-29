@@ -51,10 +51,9 @@ Before installing Mouflon, ensure that [*Deno*](https://deno.land/) is installed
       ```
     - Test running the script to confirm everything is set up correctly:
       ```bash
-      mouflon.ts --help
+      mouflon.ts
       ```
 
-This guide provides a generic approach to installing Mouflon with a focus on creating a symbolic link within a directory that's part of the user's `$PATH`. It assumes the user has already downloaded `mouflon.ts` and has Deno installed on their system.
 ## Configuration 
 
 ### Keycloak
