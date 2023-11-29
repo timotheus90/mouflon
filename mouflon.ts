@@ -337,12 +337,12 @@ async function getAccessToken(
   cacheDir: string,
   configName: string,
   clientConfig: ClientConfig,
-): Promise<string> {
+): Promise<AccessTokenResponse> {
   const cachedAuth = await readCachedAuth(cacheDir, configName);
 
   if (cachedAuth) {
     if (isAtValid(cachedAuth)) {
-      return cachedAuth.atResponse.access_token;
+      return cachedAuth.atResponse;
     } // access token expired, but refresh token still valid
     else if (isRtValid(cachedAuth)) {
       const rtResponse = await fetchAtRefreshTokenFlow(
@@ -351,7 +351,7 @@ async function getAccessToken(
       );
 
       await writeAccessTokenResponse(cacheDir, configName, rtResponse);
-      return rtResponse.access_token;
+      return rtResponse;
     }
   }
 
@@ -359,7 +359,7 @@ async function getAccessToken(
   const atr = await fetchAtAuthorizationCodeFlow(clientConfig);
   if (atr instanceof Error) throw atr;
   await writeAccessTokenResponse(cacheDir, configName, atr);
-  return atr.access_token;
+  return atr;
 }
 
 async function main() {
@@ -367,12 +367,19 @@ async function main() {
 
   const args = parse(Deno.args);
   const [config = "default"] = args._;
+  const fullResponse = args["full-response"];
 
   const clientConfig = await initConfig(config as string);
 
-  const at = await getAccessToken(cacheDir, config as string, clientConfig);
+  const atResponse = await getAccessToken(cacheDir, config as string, clientConfig);
 
-  console.log(at);
+  if (fullResponse) {
+    // Output the entire AccessTokenResponse
+    console.log(atResponse);
+  } else {
+    // Output only the access token
+    console.log(atResponse.access_token);
+  }
 }
 
 if (import.meta.main) {
